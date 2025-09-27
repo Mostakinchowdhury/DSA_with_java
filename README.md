@@ -765,3 +765,732 @@ for (int i = 1; i <= 5; i++) {
 - **continue** → current iteration skip করে
 
 ---
+
+# 📘 Lecture 5: create some basic pattern by java loop
+
+---
+
+# 📘 Lecture 6: create some advanced pattern by java loop
+
+---
+
+# 📘 Lecture 7 – Functions & Methods (Java)
+
+## 🔹 Function / Method কী?
+
+- **Function (বা Method)** হলো কোনো কোড ব্লক যেটা একটি নির্দিষ্ট কাজ করার জন্য বানানো হয়।
+- বারবার একই কোড লিখতে না হয়ে একবার ফাংশন লিখে বারবার ব্যবহার করা যায়।
+
+---
+
+## 🔹 Function Declaration Syntax (Java)
+
+```java
+returnType functionName(parameterType parameterName) {
+    // function body
+    return value; // যদি returnType void না হয়
+}
+```
+
+👉 Example:
+
+```java
+int add(int a, int b) {
+    return a + b;
+}
+```
+
+---
+
+## 🔹 Method vs Function
+
+- Java তে **সব Function আসলে Method** কারণ এগুলো সবসময় কোনো Class এর ভেতরে থাকে।
+- অন্য ভাষায় Function আলাদা থাকতে পারে, কিন্তু Java তে Method সবসময় Class এর অংশ।
+
+---
+
+## 🔹 Static Method
+
+```java
+class MyClass {
+    public static int square(int n) {
+        return n * n;
+    }
+}
+```
+
+- `static` method সরাসরি class এর নাম দিয়ে কল করা যায় → `MyClass.square(5)`
+- Static method এর জন্য class object বানাতে হয় না।
+
+👉 **কোথায় static ব্যবহার করব?**
+
+- যখন method এর কাজ কোনো **object-এর ডেটা নির্ভর নয়**।
+- শুধু ইনপুট নিয়ে কাজ করে, object fields ব্যবহার করে না।
+
+---
+
+## 🔹 Non-Static Method (Instance Method)
+
+```java
+class MyClass {
+    int x = 10;
+
+    public int getX() {
+        return this.x; // এখানে this ব্যবহার করা হচ্ছে
+    }
+}
+```
+
+- Non-static method কল করতে object বানাতে হয়।
+- Method object-এর ভেতরের data (fields/variables) access করতে পারে।
+
+---
+
+## 🔹 `this` Keyword
+
+- `this` মানে **current object**
+- যখন method এর ভিতরে **object-এর variable (instance variable)** আর **local variable** এর নাম একই
+  হয়, তখন `this` ব্যবহার করতে হয়।
+
+👉 Example:
+
+```java
+class MyClass {
+    int x;
+
+    MyClass(int x) {
+        this.x = x; // this.x মানে instance variable, x মানে local variable (constructor এর parameter)
+    }
+}
+```
+
+👉 **কখন this লাগবে না?**
+
+- যদি local variable আর instance variable এর নাম আলাদা হয়, তখন `this` না লিখলেও চলে।
+
+---
+
+## 🔹 `main()` Method vs Class Methods
+
+### 1. `public static void main(String[] args)`
+
+- এটি Java প্রোগ্রামের entry point।
+- এর মধ্যে সরাসরি কোড লিখতে পারি অথবা অন্য method call করতে পারি।
+- এখানে আমরা **static** method ব্যবহার করি কারণ `main` এর মধ্যে object create না করেও call করা যায়।
+
+### 2. Class এর বাইরে Method লেখা (কিন্তু class এর ভেতরেই থাকে)
+
+```java
+class Calculator {
+    public static int add(int a, int b) {
+        return a + b;
+    }
+
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+}
+```
+
+👉 এখানে:
+
+- `add` → static method (object ছাড়াই call করা যাবে: `Calculator.add(5, 6)`)
+- `multiply` → instance method (object বানিয়ে call করতে হবে: `new Calculator().multiply(5, 6)`)
+
+---
+
+## 🔹 কখন কোনটা ব্যবহার করব?
+
+- **Static Method:**
+
+  - কাজটা object-এর state (instance variable) এর উপর নির্ভর করে না।
+  - Pure functions এর মতো কাজ করবে (যেমন: `Math.sqrt()`, `Math.max()` ইত্যাদি)।
+
+- **Non-Static Method (Instance Method):**
+
+  - কাজটা object-specific data এর উপর নির্ভর করছে।
+  - Example: Bank Account class এর মধ্যে `withdraw()` method → এটা নির্দিষ্ট account balance এর উপর
+    কাজ করবে।
+
+---
+
+## 🔹 Example Code Recap
+
+```java
+class Calculator {
+
+    // static method
+    public static int add(int a, int b) {
+        return a + b;
+    }
+
+    // non-static method
+    public int multiply(int a, int b) {
+        return a * b;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // static method call
+        int sum = Calculator.add(5, 10);
+        System.out.println("Sum: " + sum);
+
+        // non-static method call
+        Calculator calc = new Calculator();
+        int product = calc.multiply(5, 10);
+        System.out.println("Product: " + product);
+    }
+}
+```
+
+---
+
+# 📌 Summary (Quick Recap)
+
+- Function = Method (Java তে সব function class এর মধ্যে থাকে)।
+- `static` method object ছাড়া কল করা যায়, `non-static` method এর জন্য object লাগে।
+- `this` keyword = current object (instance variable আর local variable আলাদা করার জন্য ব্যবহার হয়)।
+- `main()` = program entry point, এখানে static methods কল করা যায়, object বানিয়ে instance methods-ও
+  কল করা যায়।
+
+---
+
+# 📘 Lecture 8 – Java Exercise
+
+## Questions
+
+- Enter 3 numbers from the user & make a function to print their average.
+- Write a function to print the sum of all odd numbers from 1 to n.
+- Write a function which takes in 2 numbers and returns the greater of those two.
+- Write a function that takes in the radius as input and returns the circumference of a circle.
+- Write a function that takes in age as input and returns if that person is eligible to vote or not.
+  A person of age > 18 is eligible to vote.
+- Write an infinite loop using do while condition.
+- Write a program to enter the numbers till the user wants and at the end it should display the
+  count of positive, negative and zeros entered.
+- Two numbers are entered by the user, x and n. Write a function to find the value of one number
+  raised to the power of another i.e. xn.
+
+- Write a function that calculates the Greatest Common Divisor of 2 numbers. (BONUS)
+- Write a program to print Fibonacci series of n terms where n is input by user : 0 1 1 2 3 5 8 13
+  21 ..... In the Fibonacci series, a number is the sum of the previous 2 numbers that came before
+  it. (BONUS)
+
+---
+
+# **📘 Lecture 9: Time Complexity & Space Complexity**
+
+## ⏳ 1. Time Complexity কী?
+
+👉 Time Complexity = একটি algorithm ইনপুট সাইজ (n) বাড়লে কত সময় নেয় সেটা measure করার পদ্ধতি।
+
+- এটা **exact time (seconds/minutes)** না, বরং **growth rate** measure করে।
+- অর্থাৎ, `n` যত বড় হবে, রানিং টাইম কত দ্রুত বাড়বে তা বোঝায়।
+
+---
+
+## 🧮 2. Space Complexity কী?
+
+👉 Space Complexity = Algorithm চালানোর জন্য কতটা **memory (RAM)** লাগবে। এতে ধরা হয়:
+
+- Variable,
+- Data Structure,
+- Function Call Stack ইত্যাদি।
+
+---
+
+## ⚡ 3. Types of Time Complexity
+
+### (a) **Best Case (Ω Notation)**
+
+- যখন input সবচেয়ে ভালো অবস্থায় থাকে।
+- Algorithm এর সবচেয়ে কম সময় লাগে।
+- Example: Linear Search → যদি element প্রথমেই পাওয়া যায়।
+
+```java
+// Linear Search Best Case
+int search(int[] arr, int key) {
+    if (arr[0] == key) return 0;  // Best Case O(1)
+}
+```
+
+👉 নোটেশনে লেখা হয় **Ω(n)**
+
+---
+
+### (b) **Average Case (Θ Notation)**
+
+- সাধারনভাবে মাঝামাঝি অবস্থার সময়।
+- Input random হলে যে সময়টা লাগবে।
+- Example: Linear Search → element মাঝে কোথাও থাকলে। 👉 নোটেশনে লেখা হয় **Θ(n)**
+
+---
+
+### (c) **Worst Case (O Notation / Big O)**
+
+- সবচেয়ে খারাপ input দিলে কত সময় লাগবে।
+- Algorithm design & analysis এ **সবচেয়ে বেশি গুরুত্ব** দেয়া হয় কারণ worst-case এ program fail করলে
+  চলবে না।
+- Example: Linear Search → যদি element একদম শেষে থাকে বা না থাকে।
+
+```java
+// Linear Search Worst Case
+int search(int[] arr, int key) {
+    for (int i = 0; i < arr.length; i++) {
+        if (arr[i] == key) return i;
+    }
+    return -1; // Worst Case O(n)
+}
+```
+
+👉 নোটেশনে লেখা হয় **O(n)**
+
+---
+
+## 🔍 4. Common Time Complexities
+
+| Complexity     | Name         | Example                          |
+| -------------- | ------------ | -------------------------------- |
+| **O(1)**       | Constant     | Accessing array element by index |
+| **O(log n)**   | Logarithmic  | Binary Search                    |
+| **O(n)**       | Linear       | Linear Search                    |
+| **O(n log n)** | Linearithmic | Merge Sort, Quick Sort (average) |
+| **O(n²)**      | Quadratic    | Bubble Sort, Insertion Sort      |
+| **O(2^n)**     | Exponential  | Recursive Fibonacci              |
+| **O(n!)**      | Factorial    | Traveling Salesman (Brute Force) |
+
+---
+
+## 🧠 5. কিভাবে Time Complexity বের করব?
+
+1. **Loops Count করো** → কয়বার loop চলছে।
+
+   - `for (i=0; i<n; i++)` → O(n)
+   - Nested loop → O(n²)
+
+2. **Recursive calls দেখো** → এক recursion কয়বার হচ্ছে।
+
+   - Fibonacci recursion → O(2^n)
+
+3. **Best, Average, Worst Case আলাদা করো**।
+4. **Constant ignore করো** → O(2n) = O(n)।
+5. **Highest Order রাখো** → O(n² + n) = O(n²)।
+
+---
+
+## 🛠️ 6. Space Complexity বের করার Rule
+
+- Variables → O(1)
+- Arrays → O(n)
+- Two nested arrays → O(n²)
+- Recursive calls → O(n) (stack space)
+
+---
+
+## 📊 7. Best vs Average vs Worst ব্যবহার
+
+- **Best Case (Ω)** → Performance optimization বুঝতে।
+- **Average Case (Θ)** → সাধারণ runtime expectation।
+- **Worst Case (O)** → Algorithm কতটা reliable হবে, সেটাই measure করার standard।
+
+---
+
+## ✅ Example Summary:
+
+- Linear Search → Best O(1), Average Θ(n), Worst O(n)
+- Binary Search → Best O(1), Average Θ(log n), Worst O(log n)
+- Bubble Sort → Best O(n), Average Θ(n²), Worst O(n²)
+
+---
+
+# 🎯 Final Shortcut Recap
+
+- **Best Case** = Ω
+- **Average Case** = Θ
+- **Worst Case** = O (Big O সবচেয়ে বেশি important)
+- Loop = `n` বার → O(n)
+- Nested Loop = `n * n` → O(n²)
+- Divide & Conquer (Binary Search) → O(log n)
+
+---
+
+# **📘 Lecture 10: Arrays in Java + Linear Search**
+
+## 🧾 1. Array কী?
+
+👉 Array হলো একধরনের **data structure** যেখানে একই ধরনের multiple value একসাথে contiguous memory
+block-এ store হয়।
+
+- প্রতিটি element **index (0-based)** দিয়ে access করা হয়।
+- Fixed size → declare করার সময় length দিতে হয়।
+
+---
+
+## 🏗️ 2. Array Declare করার উপায় (Java)
+
+### (a) Declaration + Memory allocation একসাথে
+
+```java
+int[] arr = new int[5];   // size 5 এর integer array
+```
+
+### (b) Declaration + Initialization
+
+```java
+int[] arr = {10, 20, 30, 40, 50};
+```
+
+### (c) Separate Declaration & Memory Allocation
+
+```java
+int arr[];
+arr = new int[5];
+```
+
+### (d) Multi-Dimensional Array
+
+```java
+int[][] matrix = new int[3][3];  // 3x3 2D array
+```
+
+---
+
+## 🧑‍💻 3. User Input দিয়ে Array তৈরি করা
+
+```java
+import java.util.Scanner;
+
+class Main {
+  public static void main(String[] args) {
+    Scanner sc = new Scanner(System.in);
+
+    System.out.print("Enter array size: ");
+    int n = sc.nextInt();
+
+    int[] arr = new int[n];  // user defined size
+
+    System.out.println("Enter " + n + " elements:");
+    for (int i = 0; i < n; i++) {
+      arr[i] = sc.nextInt();
+    }
+
+    System.out.println("You entered:");
+    for (int i = 0; i < n; i++) {
+      System.out.println(arr[i]);
+    }
+
+    sc.close();
+  }
+}
+```
+
+---
+
+## 🔍 4. Linear Search Algorithm
+
+👉 **Definition:** Linear Search = একটি **search algorithm** যেখানে আমরা array-এর প্রতিটি element
+একে একে check করি target value এর সাথে মিলে কিনা।
+
+### ⏱️ Time Complexity:
+
+- **Best Case:** O(1) → যদি প্রথমেই element পাওয়া যায়।
+- **Worst Case:** O(n) → যদি element শেষে থাকে বা না থাকে।
+
+---
+
+### ✅ Java Example: Linear Search
+
+```java
+class LinearSearch {
+  public static int search(int[] arr, int key) {
+    for (int i = 0; i < arr.length; i++) {
+      if (arr[i] == key) {
+        return i; // পাওয়া গেলে index return করবে
+      }
+    }
+    return -1; // না পাওয়া গেলে -1 return
+  }
+
+  public static void main(String[] args) {
+    int[] arr = {10, 20, 30, 40, 50};
+    int key = 30;
+
+    int result = search(arr, key);
+    if (result == -1) {
+      System.out.println("Element not found!");
+    } else {
+      System.out.println("Element found at index: " + result);
+    }
+  }
+}
+```
+
+---
+
+### ✅ JavaScript Example: Linear Search
+
+```javascript
+function linearSearch(arr, key) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === key) {
+      return i // index return
+    }
+  }
+  return -1 // not found
+}
+
+const arr = [10, 20, 30, 40, 50]
+const key = 30
+
+const result = linearSearch(arr, key)
+console.log(result === -1 ? 'Element not found!' : `Element found at index: ${result}`)
+```
+
+---
+
+## 📍 5. কবে Linear Search ব্যবহার করব?
+
+👉 যখন:
+
+1. Array ছোট হয়।
+2. Array unsorted থাকে (Binary Search তখন কাজ করে না)।
+3. বারবার search করার দরকার নেই।
+4. Quick implementation দরকার।
+5. Memory কম খরচ করতে চাই (extra structure লাগে না)।
+
+---
+
+## 🌍 6. Real Life Example of Linear Search
+
+1. মোবাইল phone contacts list এ একটা নাম খোঁজা (unsorted)।
+2. Library book shelf থেকে specific বই খোঁজা।
+3. File Explorer এ একটা file ম্যানুয়ালি খোঁজা।
+4. Student roll number থেকে একজনকে খোঁজা (random order list)।
+5. Supermarket list এ একটা product manually খোঁজা।
+
+---
+
+## ⚖️ 7. Java vs JavaScript (Array + Linear Search তুলনা)
+
+| Concept          | Java Example                           | JavaScript Example        |
+| ---------------- | -------------------------------------- | ------------------------- |
+| Array Declare    | `int[] arr = new int[5];`              | `let arr = new Array(5);` |
+| Array Initialize | `int[] arr = {1,2,3};`                 | `let arr = [1,2,3];`      |
+| User Input       | `Scanner sc = new Scanner(System.in);` | `prompt()` / form input   |
+| Search Syntax    | `for (int i=0; i<n; i++)`              | `for (let i=0; i<n; i++)` |
+| Return Not Found | `return -1;`                           | `return -1;`              |
+| Inbuilt Method   | নেই (manually লিখতে হয়)                | `arr.indexOf(key)`        |
+
+---
+
+# 🎯 Final Recap
+
+- Java তে Array fixed size, JS এ dynamic।
+- Array Declare → `int[] arr` (Java), `let arr=[]` (JS)।
+- User Input → Java তে `Scanner`, JS তে `prompt` বা form input।
+- Linear Search → O(n), সহজ কিন্তু বড় data-এর জন্য slow।
+- Binary Search এর মতো efficient না, কিন্তু unsorted data এর জন্য একমাত্র option।
+
+---
+
+
+# **📘 Lecture 11 – 2D Arrays (DSA with Java Placement Course)**
+
+## 🔹 2D Array কী?
+
+* 2D Array মানে হলো **Array এর ভিতরে Array**।
+* এটাকে **Matrix** নামেও ডাকা হয় (rows × columns আকারে data রাখা হয়)।
+* **Structure:**
+
+  ```
+  arr[row][col]
+  ```
+* যেমন 3x3 মেট্রিক্স:
+
+  ```
+  1 2 3
+  4 5 6
+  7 8 9
+  ```
+
+---
+
+## 🔹 2D Array Declare করার উপায়
+
+### **1. Direct Size দিয়ে**
+
+```java
+int[][] arr = new int[3][4];  // 3 rows, 4 columns
+```
+
+### **2. Direct Initialization দিয়ে**
+
+```java
+int[][] arr = {
+    {1, 2, 3},
+    {4, 5, 6},
+    {7, 8, 9}
+};
+```
+
+### **3. Jagged Array (row-wise ভিন্ন length)**
+
+```java
+int[][] arr = new int[3][];
+arr[0] = new int[2]; // row 0 → 2 elements
+arr[1] = new int[3]; // row 1 → 3 elements
+arr[2] = new int[4]; // row 2 → 4 elements
+```
+
+📌 **কখন কোনটা ব্যবহার করব?**
+
+* Fixed size (Matrix problem) → `new int[row][col]`
+* Small + predefined data → direct initialization
+* Rows আলাদা আলাদা length হলে → Jagged Array
+
+---
+
+## 🔹 User Input দিয়ে 2D Array নেওয়া
+
+```java
+import java.util.Scanner;
+
+public class TwoDArrayInput {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // Input size
+        System.out.print("Enter rows: ");
+        int rows = sc.nextInt();
+        System.out.print("Enter cols: ");
+        int cols = sc.nextInt();
+
+        int[][] arr = new int[rows][cols];
+
+        // Input values
+        System.out.println("Enter elements:");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                arr[i][j] = sc.nextInt();
+            }
+        }
+
+        // Print array
+        System.out.println("2D Array is:");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                System.out.print(arr[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+```
+
+---
+
+## 🔹 2D Array তে Linear Search Algorithm
+
+### Algorithm:
+
+1. পুরো 2D array row by row traverse করো।
+2. প্রতিটি element check করো target এর সাথে।
+3. পেলে index return করো, না পেলে -1।
+
+### Example (Java)
+
+```java
+public class LinearSearch2D {
+    public static void main(String[] args) {
+        int[][] arr = {
+            {10, 20, 30},
+            {40, 50, 60},
+            {70, 80, 90}
+        };
+
+        int target = 50;
+        boolean found = false;
+
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr[i].length; j++) {
+                if (arr[i][j] == target) {
+                    System.out.println("Found at: (" + i + ", " + j + ")");
+                    found = true;
+                }
+            }
+        }
+
+        if (!found) {
+            System.out.println("Not Found!");
+        }
+    }
+}
+```
+
+### Example (JavaScript)
+
+```javascript
+let arr = [
+  [10, 20, 30],
+  [40, 50, 60],
+  [70, 80, 90]
+];
+
+let target = 50;
+let found = false;
+
+for (let i = 0; i < arr.length; i++) {
+  for (let j = 0; j < arr[i].length; j++) {
+    if (arr[i][j] === target) {
+      console.log(`Found at (${i}, ${j})`);
+      found = true;
+    }
+  }
+}
+
+if (!found) {
+  console.log("Not Found!");
+}
+```
+
+---
+
+## 🔹 কখন Linear Search ব্যবহার করব?
+
+* Array **sorted না হলে** (binary search use করা যাবে না)
+* Small dataset এ (কারণ Time Complexity: **O(n × m)** for 2D array)
+* যখন searching frequency কম (1–2 বার)
+
+---
+
+## 🔹 Real-life Example of Linear Search in 2D
+
+1. Excel sheet থেকে কোনো value খোঁজা
+2. Sudoku board এ সংখ্যা খোঁজা
+3. Chessboard এ কোনো specific piece এর location খোঁজা
+4. Seating arrangement এ কোনো seat খোঁজা
+5. Pixel matrix এ কোনো color খোঁজা
+
+---
+
+## 🔹 Java vs JavaScript (Comparison)
+
+| Concept                  | Java (2D Array)          | JavaScript (2D Array)       |
+| ------------------------ | ------------------------ | --------------------------- |
+| Declare fixed size       | `new int[3][4]`          | Not possible directly       |
+| Jagged Array             | Supported                | Supported (`[[],[]]`)       |
+| User input               | `Scanner` দিয়ে নেওয়া যায় | Browser prompt / Node input |
+| Linear Search complexity | O(rows × cols)           | O(rows × cols)              |
+
+---
+
+✅ **Quick Recap:**
+
+* 2D Array → Matrix (row × col)
+* Declare করার ৩টা উপায় → fixed, initialized, jagged
+* Input → `Scanner` দিয়ে
+* Linear Search → প্রতিটি element sequentially check করা
+* Real-life ৫টা example → Excel, Sudoku, Chessboard, Seating, Pixel
+
+---
